@@ -2,6 +2,8 @@ const Koa = require('koa')
 const router = require('koa-router')()
 const app = new Koa()
 const debug = require('debug')('ilp-ws-provider')
+const ws = require('ws')
+const httpProxy = require('http-proxy')
 
 const Connector = require('ilp-connector')()
 const PluginBtp = require('ilp-plugin-btp')()
@@ -9,6 +11,7 @@ const crypto = require('crypto')
 const ILDCP = require('ilp-protocol-ildcp')
 
 // SSL settings
+const WS_PORT = Number(process.env.WS_PORT) || 7772
 const WEB_PORT = Number(process.env.WEB_PORT) || 7771
 const https = require('https')
 const fs = require('fs-extra')
@@ -41,6 +44,13 @@ const server = https
   .createServer(certOptions, app.callback())
   .listen(WEB_PORT)
 
+const proxy = httpProxy.createProxyServer()
+server.on('upgrade', (req, socket, head) => {
+  proxy.ws(req, socket, head, {
+    target: 'http://localhost:' + WS_PORT
+  })
+})
+
 async function start () {
   const moneydUri = process.env.MONEYD_URI || 'btp+ws://localhost:7768'
   const btpToken = crypto.randomBytes(16).toString('hex')
@@ -57,7 +67,6 @@ async function start () {
 
   debug('got ILDCP result. res=' + JSON.stringify(ildcp))
   const connectorBtpToken = crypto.randomBytes(16).toString('hex')
-  const WS_PORT = Number(process.env.WS_PORT) || 7772
   const connector = Connector.createApp({
     spread: 0,
     backend: 'one-to-one',

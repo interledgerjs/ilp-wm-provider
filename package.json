@@ -4,21 +4,24 @@
   "description": "> Enable Web Monetization using your own XRP wallet",
   "main": "index.js",
   "scripts": {
+    "build": "./node_modules/.bin/webpack --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^7.0.0",
+    "http-proxy": "^1.17.0",
     "ilp-connector": "^22.1.0",
     "ilp-plugin-btp": "^1.3.2",
     "ilp-protocol-ildcp": "^2.0.0",
     "koa": "^2.5.3",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.2",
+    "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-2017": "0.0.0",
     "babel-preset-es2015": "^6.24.1",
