@@ -37,10 +37,13 @@ extension installed, because it will register itself over this handler.
 - Node.js version 8 or higher.
 - [Moneyd should be installed and running on the livenet](https://medium.com/interledger-blog/joining-the-live-ilp-network-eab123a73665)
 
-### Install `ilp-wm-provider`
+### Clone `ilp-wm-provider`
 
 ```sh
-npm install -g ilp-wm-provider
+git clone https://github.com/sharafian/ilp-wm-provider.git
+cd ilp-wm-provider
+npm install
+npm run build
 ```
 
 ### Generate Certs
@@ -95,7 +98,7 @@ Now your server will be able to run SSL locally!
 Now you can run your provider with:
 
 ```sh
-ilp-wm-provider
+npm start
 ```
 
 And navigate to [https://localhost:7771](https://localhost:7771).
