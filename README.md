@@ -59,3 +59,16 @@ ilp-wm-provider --web-port 7771 --ws-port 7772
 ```
 
 And navigate to [https://localhost:7771](https://localhost:7771).
+
+## Environment Variables
+
+- `WEB_PORT` - Which port to run the webserver on (default `7771`)
+
+- `WS_PORT` - Which port to run the BTP server on (default `7772`)
+
+- `MONEYD_URI` - The uri to connect to for moneyd access (default `btp+ws://localhost:7768`)
+
+- `THROUGHPUT` - Throughput in units/second. These are the same units as your
+  moneyd. The default value is `100`, which would be 100 drops/second on
+moneyd-uplink-xrp.
+
