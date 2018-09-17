@@ -4,3 +4,4 @@ cert/*.pem
 cert/*.crt
 cert/*.csr
 .srl
+dist/
