@@ -66,6 +66,10 @@ server.on('upgrade', (req, socket, head) => {
   })
 })
 
+proxy.on('error', e => {
+  console.error('proxy error', e)
+})
+
 async function start () {
   const moneydUri = process.env.MONEYD_URI || 'btp+ws://localhost:7768'
   const btpToken = crypto.randomBytes(16).toString('hex')
