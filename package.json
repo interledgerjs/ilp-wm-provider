@@ -1,6 +1,6 @@
 {
   "name": "ilp-wm-provider",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "> Enable Web Monetization using your own XRP wallet",
   "main": "index.js",
   "scripts": {
