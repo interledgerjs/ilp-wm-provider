@@ -7,6 +7,9 @@
     "build": "./node_modules/.bin/webpack --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "ilp-wm-provider": "./index.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -95,7 +95,7 @@ Now your server will be able to run SSL locally!
 Now you can run your provider with:
 
 ```sh
-ilp-wm-provider --web-port 7771 --ws-port 7772
+ilp-wm-provider
 ```
 
 And navigate to [https://localhost:7771](https://localhost:7771).
