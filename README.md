@@ -1,12 +1,52 @@
 # ILP Web Monetization Provider
-> Enable Web Monetization using your own XRP wallet
+> Enable Web Monetization using your own Interledger connection
+
+_This tool is intended for experienced users, because it requires a knowledge of the
+command line and Interledger tools like Moneyd._
+
+This repo allows you to use Web Monetized without a Coil subscription. It does
+this by implementing [the standard for a Web Monetization
+provider](https://github.com/interledger/rfcs/blob/master/0028-web-monetization/0028-web-monetization.md#web-monetization-handler-api)
+and running all of the infrastructure on your local machine. For ILP
+connectivity it uses [moneyd](https://github.com/interledgerjs/moneyd).
+
+The reason this code is being released is to allow people an alternative to Coil
+if they want to use their own funds directly instead of paying a subscription, and
+to serve as an example of how to implement a Web Monetization handler.
+
+`ilp-wm-provider` differs from a Coil subscription in a few key ways:
+
+1. Rather than paying a flat rate to Coil, you pay directly to the site out of
+pocket.
+
+2. This requires the use of Moneyd on your machine, which currently means you
+need an XRP wallet. It also requires that an additional `ilp-wm-provider`
+process is run.
+
+3. Coil's servers are not touched in the process of payment. Only the public
+Interledger infrastructure is used.
+
+4. There is no chrome extension for this Web Monetization provider. Just like
+Coil, it can work without an extension. Make sure you don't have the Coil
+extension installed, because it will register itself over this handler.
 
 ## Setup
 
-WM providers must run over HTTPS. However, `ilp-wm-provider` runs locally.
-This means that you'll need a self-signed certificate.
+### Prerequisites
+
+- Node.js version 8 or higher.
+- [Moneyd should be installed and running on the livenet](https://medium.com/interledger-blog/joining-the-live-ilp-network-eab123a73665)
+
+### Install `ilp-wm-provider`
+
+```sh
+npm install -g ilp-wm-provider
+```
 
 ### Generate Certs
+
+WM providers must run over HTTPS. However, `ilp-wm-provider` runs locally.
+This means that you'll need a self-signed certificate.
 
 ```sh
 # Generate root ssl cert.  When it asks you to generate a password remember
