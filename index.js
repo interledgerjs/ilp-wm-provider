@@ -28,6 +28,11 @@ router.get('/handler.html', async ctx => {
   ctx.body = await fs.readFile(path.resolve(__dirname, 'static/handler.html'))
 })
 
+router.get('/cover.css', async ctx => {
+  ctx.set('Content-Type', 'text/css')
+  ctx.body = await fs.readFile(path.resolve(__dirname, 'static/cover.css'))
+})
+
 router.get('/', async ctx => {
   ctx.set('Content-Type', 'text/html')
   ctx.body = await fs.readFile(path.resolve(__dirname, 'static/index.html'))
