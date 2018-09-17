@@ -5,8 +5,8 @@ const debug = require('debug')('ilp-ws-provider')
 const ws = require('ws')
 const httpProxy = require('http-proxy')
 
-const Connector = require('ilp-connector')()
-const PluginBtp = require('ilp-plugin-btp')()
+const Connector = require('ilp-connector')
+const PluginBtp = require('ilp-plugin-btp')
 const crypto = require('crypto')
 const ILDCP = require('ilp-protocol-ildcp')
 
@@ -24,15 +24,23 @@ const certOptions = {
 }
 
 router.get('/handler.html', async ctx => {
-  ctx.body = fs.readFile(path.resolve(__dirname, 'static/handler.html'))
+  ctx.set('Content-Type', 'text/html')
+  ctx.body = await fs.readFile(path.resolve(__dirname, 'static/handler.html'))
+})
+
+router.get('/', async ctx => {
+  ctx.set('Content-Type', 'text/html')
+  ctx.body = await fs.readFile(path.resolve(__dirname, 'static/index.html'))
 })
 
 router.get('/polyfill.js', async ctx => {
-  ctx.body = fs.readFile(path.resolve(__dirname, 'dist/polyfill.js'))
+  ctx.set('Content-Type', 'text/js')
+  ctx.body = await fs.readFile(path.resolve(__dirname, 'dist/polyfill.js'))
 })
 
 router.get('/handler.js', async ctx => {
-  ctx.body = fs.readFile(path.resolve(__dirname, 'dist/handler.js'))
+  ctx.set('Content-Type', 'text/js')
+  ctx.body = await fs.readFile(path.resolve(__dirname, 'dist/handler.js'))
 })
 
 app
@@ -70,21 +78,22 @@ async function start () {
   const connector = Connector.createApp({
     spread: 0,
     backend: 'one-to-one',
-    store: 'memdown',
+    store: 'ilp-store-memory',
     initialConnectTimeout: 60000,
-    env: ildcp.startsWith('g.') ? 'production' : 'test',
+    env: ildcp.clientAddress.startsWith('g.') ? 'production' : 'test',
     accounts: {
       wm: {
         relation: 'child',
-        plugin: 'ilp-plugin-btp',
+        plugin: 'ilp-plugin-mini-accounts',
         assetCode: ildcp.assetCode,
-        assetScale: ildcp.assetScale,
+        assetScale: (ildcp.assetCode === 'XRP' ? 9 : ildcp.assetScale),
+        maxPacketAmount: '100000',
         throughput: {
-          outgoing: process.env.THROUGHPUT || '100'
+          incomingAmount: process.env.THROUGHPUT || '100000'
         },
         options: {
           wsOpts: { host: 'localhost', port: WS_PORT },
-          allowedOrigins: [ 'https://localhost:' + WS_PORT ]
+          allowedOrigins: [ 'https://localhost:' + WEB_PORT ]
         }
       },
       moneyd: {
@@ -92,8 +101,10 @@ async function start () {
         plugin: 'ilp-plugin-btp',
         assetCode: ildcp.assetCode,
         assetScale: ildcp.assetScale,
+        sendRoutes: false,
+        receiveRoutes: false,
         throughput: {
-          outgoing: process.env.THROUGHPUT || '100'
+          outgoingAmount: process.env.THROUGHPUT || '100'
         },
         options: {
           server: moneydUri,
