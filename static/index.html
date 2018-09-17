@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <link
+    rel="stylesheet"
+    href="./cover.css">
+  <script src="https://polyfill.webmonetization.org/polyfill.js"></script>
+  <script>
+window.onload = function () {
+  const hash = window.location.hash
+  const button = document.getElementById('web-monetization-button')
+  const buttonText = button.innerHTML
+
+  function resetButton () {
+    button.className = 'btn btn-lg btn-secondary'
+    button.innerHTML = buttonText
+    button.style = ''
+    window.location.hash = ''
+  }
+
+  resetButton()
+
+  window.register = function () {
+    window.WebMonetization.register({
+      name: 'ILP WM Provider',
+      handlerUri: window.location.origin + '/handler.html'
+    }).then(res => {
+      if (res) {
+        console.log('success')
+        button.style = ''
+        button.className = 'btn btn-lg btn-success'
+        button.innerText = 'Success'
+        setTimeout(resetButton, 3000)
+      } else {
+        console.log('cancel')
+        button.style = ''
+        button.className = 'btn btn-lg btn-danger'
+        button.innerText = 'Canceled'
+        setTimeout(resetButton, 3000)
+      }
+    })
+  }
+}
+  </script>
+  <title>ILP WM Provider</title>
+</head>
+<body class="text-center">
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading">Get Web Monetization</h1>
+      <p class="lead">
+        With the <a href="#">Web Monetization</a> standard, your Coil subscription lets you support content creators, journalists, or anyone else.
+      </p>
+      <p class="lead">
+        <a
+          href="#"
+          id="web-monetization-button"
+          class="btn btn-lg btn-secondary" 
+          style="display:none"
+          onclick="window.register()"
+        >
+          Register Handler
+        </a>
+      </p>
+    </main>
+  </div>
+</body>
+</html>
