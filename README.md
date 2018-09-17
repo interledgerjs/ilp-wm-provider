@@ -101,7 +101,7 @@ Now you can run your provider with:
 npm start
 ```
 
-And navigate to [https://localhost:7771](https://localhost:7771).
+Navigate to [https://localhost:7771](https://localhost:7771) and click "Register Handler." Once you confirm, you'll be able to use Web Monetization!
 
 ## Environment Variables
 
