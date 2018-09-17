@@ -1,15 +1,12 @@
 {
   "name": "ilp-wm-provider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "> Enable Web Monetization using your own XRP wallet",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --debug",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
-  },
-  "bin": {
-    "ilp-wm-provider": "./index.js"
   },
   "author": "",
   "license": "ISC",
