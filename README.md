@@ -6,7 +6,7 @@ command line and Interledger tools like Moneyd._
 
 **Warning: Use this at your own risk! This software will automatically send micropayments to sites that you visit, which could cost you money! Don't fund your wallet with more than you're willing to risk.**
 
-This repo allows you to use Web Monetized without a Coil subscription. It does
+This repo allows you to use Web Monetization without a Coil subscription. It does
 this by implementing [the standard for a Web Monetization
 provider](https://github.com/interledger/rfcs/blob/master/0028-web-monetization/0028-web-monetization.md#web-monetization-handler-api)
 and running all of the infrastructure on your local machine. For ILP
